@@ -1,4 +1,6 @@
+'use client'
 import { Button } from '@/components/ui/button'
+import { signIn } from '@/lib/auth-client'
 import Image from 'next/image'
 
 const AuthPage = () => {
@@ -26,7 +28,15 @@ const AuthPage = () => {
               negócios de forma eficiente e intuitiva.
             </p>
             <div className="flex items-center justify-center">
-              <Button className="w-full">
+              <Button
+                className="w-full"
+                onClick={() =>
+                  signIn.social({
+                    provider: 'google',
+                    callbackURL: '/',
+                  })
+                }
+              >
                 <svg
                   viewBox="-3 0 262 262"
                   xmlns="http://www.w3.org/2000/svg"
