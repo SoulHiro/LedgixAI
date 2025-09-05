@@ -250,13 +250,13 @@ coverage/
 # Turborepo
 .turbo
 
-# Prisma (caso use no futuro)
-prisma/migrations/
-
 # Backup files
 *.backup
 *.bak
 *.tmp
+
+# Drizzle ORM
+drizzle/meta
 
 # Lock files (opcional - descomente se quiser ignorar)
 # package-lock.json

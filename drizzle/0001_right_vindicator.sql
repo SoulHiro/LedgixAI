@@ -1,0 +1,1 @@
+ALTER TABLE "transaction" RENAME COLUMN "transaction_type" TO "type";

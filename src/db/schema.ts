@@ -98,9 +98,9 @@ const PaymentMethodEnum = pgEnum('payment_method', [
   'OTHER',
 ])
 
-export const transactionsTable = pgTable('transactions', {
+export const transactionsTable = pgTable('transaction', {
   id: uuid().defaultRandom().primaryKey(),
-  transactionType: TransactionTypeEnum('transaction_type').notNull(),
+  type: TransactionTypeEnum('type').notNull(),
   name: text('name').notNull(),
   amount: decimal('amount', { precision: 10, scale: 2 }).notNull(),
   category: CategoryEnum('category').notNull(),

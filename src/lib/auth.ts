@@ -6,7 +6,7 @@ import {
   accountsTable,
   verificationsTable,
 } from '@/db/schema'
-import db from '@/db'
+import { db } from '@/db'
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
