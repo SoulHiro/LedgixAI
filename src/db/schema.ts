@@ -70,13 +70,13 @@ export const verificationsTable = pgTable('verification', {
     .notNull(),
 })
 
-const TransactionTypeEnum = pgEnum('transaction_type', [
+export const TransactionTypeEnum = pgEnum('transaction_type', [
   'DEPOSIT',
   'EXPENSE',
   'INVESTMENT',
 ])
 
-const CategoryEnum = pgEnum('category', [
+export const CategoryEnum = pgEnum('category', [
   'HOUSING',
   'TRANSPORTATION',
   'FOOD',
@@ -88,7 +88,7 @@ const CategoryEnum = pgEnum('category', [
   'OTHER',
 ])
 
-const PaymentMethodEnum = pgEnum('payment_method', [
+export const PaymentMethodEnum = pgEnum('payment_method', [
   'CREDIT_CARD',
   'DEBIT_CARD',
   'BANK_TRANSFER',

@@ -1,5 +1,5 @@
 {
-  "id": "451d36e3-0fb0-42e7-bcdd-875c08eee8fb",
+  "id": "5a2c9ead-5369-4215-afb6-587727b391c1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -194,8 +194,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.transactions": {
-      "name": "transactions",
+    "public.transaction": {
+      "name": "transaction",
       "schema": "",
       "columns": {
         "id": {
@@ -266,9 +266,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "transactions_user_id_user_id_fk": {
-          "name": "transactions_user_id_user_id_fk",
-          "tableFrom": "transactions",
+        "transaction_user_id_user_id_fk": {
+          "name": "transaction_user_id_user_id_fk",
+          "tableFrom": "transaction",
           "tableTo": "user",
           "columnsFrom": [
             "user_id"

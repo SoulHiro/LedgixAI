@@ -4,6 +4,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 
@@ -15,24 +16,34 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-interface DataTableProps<TData, TValue> {
+interface DataTableWithPaginationProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  pageSize?: number
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableWithPagination<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  pageSize = 10,
+}: DataTableWithPaginationProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize,
+      },
+    },
   })
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-4">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -85,6 +96,46 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+      
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between px-2">
+        <div className="flex-1 text-sm text-gray-400">
+          Mostrando {table.getState().pagination.pageIndex * pageSize + 1} a{' '}
+          {Math.min(
+            (table.getState().pagination.pageIndex + 1) * pageSize,
+            data.length
+          )}{' '}
+          de {data.length} transações
+        </div>
+        <div className="flex items-center space-x-6 lg:space-x-8">
+          <div className="flex items-center space-x-2">
+            <p className="text-sm font-medium text-gray-300">
+              Página {table.getState().pagination.pageIndex + 1} de{' '}
+              {table.getPageCount()}
+            </p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0 border-gray-600 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Página anterior</span>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0 border-gray-600 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Próxima página</span>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
