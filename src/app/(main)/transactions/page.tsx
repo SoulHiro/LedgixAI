@@ -19,7 +19,11 @@ export default async function TransactionsPage() {
           </h1>
           <AddTransactionButton />
         </div>
-        <DataTableWithPagination columns={transactionColumns} data={transactions} pageSize={10} />
+        <DataTableWithPagination
+          columns={transactionColumns}
+          data={transactions}
+          pageSize={10}
+        />
       </div>
     </div>
   )

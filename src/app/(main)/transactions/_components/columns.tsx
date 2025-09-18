@@ -19,7 +19,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Nome
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -31,7 +31,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Tipo
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -73,7 +73,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Categoria
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -88,7 +88,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Método de Pagamento
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -103,7 +103,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Data
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -122,15 +122,19 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Valor
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     sortingFn: (rowA, rowB) => {
-      const amountA = parseFloat(rowA.original.amount) * (rowA.original.type === 'EXPENSE' ? -1 : 1)
-      const amountB = parseFloat(rowB.original.amount) * (rowB.original.type === 'EXPENSE' ? -1 : 1)
+      const amountA =
+        parseFloat(rowA.original.amount) *
+        (rowA.original.type === 'EXPENSE' ? -1 : 1)
+      const amountB =
+        parseFloat(rowB.original.amount) *
+        (rowB.original.type === 'EXPENSE' ? -1 : 1)
       return amountA - amountB
     },
     cell: ({ row: { original: transaction } }) => {
