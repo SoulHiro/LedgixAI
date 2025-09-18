@@ -51,7 +51,7 @@ const DashboardPage = async () => {
     OTHER: 'Outros',
   }
 
-  // Agrupar gastos por categoria
+  // Agrupar gastos por categoria - mostrar todas as categorias
   const expensesByCategory = Object.values(CategoryEnum.enumValues)
     .map((category) => {
       const categoryExpenses = expenseTransactions.filter(
@@ -69,7 +69,7 @@ const DashboardPage = async () => {
           totalExpenses > 0 ? (totalAmount / totalExpenses) * 100 : 0,
       }
     })
-    .filter((item) => item.totalAmount > 0) // Mostrar apenas categorias com gastos
+    .sort((a, b) => b.totalAmount - a.totalAmount) // Ordenar por valor decrescente
 
   return (
     <div className="h-full bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white">

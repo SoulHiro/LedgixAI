@@ -1,9 +1,12 @@
 'use client'
 
+import * as React from 'react'
 import {
   ColumnDef,
   flexRender,
+  SortingState,
   getCoreRowModel,
+  getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -30,6 +33,8 @@ export function DataTableWithPagination<TData, TValue>({
   data,
   pageSize = 10,
 }: DataTableWithPaginationProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
@@ -39,6 +44,11 @@ export function DataTableWithPagination<TData, TValue>({
       pagination: {
         pageSize,
       },
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
     },
   })
 
@@ -96,7 +106,7 @@ export function DataTableWithPagination<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      
+
       {/* Pagination Controls */}
       <div className="flex items-center justify-between px-2">
         <div className="flex-1 text-sm text-gray-400">
@@ -117,7 +127,7 @@ export function DataTableWithPagination<TData, TValue>({
           <div className="flex items-center space-x-2">
             <Button
               variant="outline"
-              className="h-8 w-8 p-0 border-gray-600 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
+              className="h-8 w-8 border-gray-600 bg-gray-800 p-0 text-gray-300 hover:bg-gray-700 hover:text-white"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -126,7 +136,7 @@ export function DataTableWithPagination<TData, TValue>({
             </Button>
             <Button
               variant="outline"
-              className="h-8 w-8 p-0 border-gray-600 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
+              className="h-8 w-8 border-gray-600 bg-gray-800 p-0 text-gray-300 hover:bg-gray-700 hover:text-white"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >

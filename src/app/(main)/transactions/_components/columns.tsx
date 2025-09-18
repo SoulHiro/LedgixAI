@@ -2,26 +2,41 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { transactionsTable } from '@/db/schema'
 import { Badge } from '@/components/ui/badge'
-import { maxSize } from 'zod'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   TRANSACTION_CATEGORY_LABEL,
   TRANSACTION_PAYMENT_METHOD_LABEL,
 } from '@/components/_constants/transactions'
-import { deleteTransaction } from '@/app/actions/delete-transaction'
 import DeleteTransactionButton from '@/components/delete-transaction-button'
+import { ArrowUpDown } from 'lucide-react'
 
 type Transaction = typeof transactionsTable.$inferSelect
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'name',
-    header: 'Nome',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Nome
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
   },
   {
     accessorKey: 'type',
-    header: 'Tipo',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Tipo
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row: { original: transaction } }) => {
       if (transaction.type === 'DEPOSIT') {
         return (
@@ -55,21 +70,45 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: 'category',
-    header: 'Categoria',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Categoria
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row: { original: transaction } }) => {
       return TRANSACTION_CATEGORY_LABEL[transaction.category]
     },
   },
   {
     accessorKey: 'paymentMethod',
-    header: 'Método de Pagamento',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Método de Pagamento
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row: { original: transaction } }) => {
       return TRANSACTION_PAYMENT_METHOD_LABEL[transaction.paymentMethod]
     },
   },
   {
     accessorKey: 'date',
-    header: 'Data',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Data
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row: { original: transaction } }) => {
       return new Date(transaction.date).toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -80,7 +119,20 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: 'amount',
-    header: 'Valor',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Valor
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    sortingFn: (rowA, rowB) => {
+      const amountA = parseFloat(rowA.original.amount) * (rowA.original.type === 'EXPENSE' ? -1 : 1)
+      const amountB = parseFloat(rowB.original.amount) * (rowB.original.type === 'EXPENSE' ? -1 : 1)
+      return amountA - amountB
+    },
     cell: ({ row: { original: transaction } }) => {
       return (
         <p
